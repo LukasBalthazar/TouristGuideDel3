@@ -7,12 +7,21 @@ public class TouristAttraction {
     private String description;
     private List<String> district;
     private List<String> tags;
+    private String city;
 
     public TouristAttraction(String name, String description, List<String> district, List<String> tags) {
         this.name = name;
         this.description = description;
         this.district = district;
         this.tags = tags;
+        this.city = city;
+    }
+
+    public String getCity{
+        return city;
+    }
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getName() {
