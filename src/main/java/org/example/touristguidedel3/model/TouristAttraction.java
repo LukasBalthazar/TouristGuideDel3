@@ -17,7 +17,7 @@ public class TouristAttraction {
         this.city = city;
     }
 
-    public String getCity{
+    public String getCity(){
         return city;
     }
     public void setCity(String city) {
@@ -49,5 +49,8 @@ public class TouristAttraction {
     }
     public void setDistrict(List<String> district) {
         this.district = district;
+    }
+
+    public List <String> getCity() {
     }
 }

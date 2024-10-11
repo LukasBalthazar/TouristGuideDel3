@@ -74,8 +74,44 @@ public class TouristRepository {
                 }
                 return attractions;
             }
-            }
+
 
             //update attraction (U)
+            public void updateTouristAttraction(int attractionNo, TouristAttraction attraction) {
+                String query = "UPDATE TOURISTATTRACTION SET ATTRACTIONNAME=?, ATTRACTIONDISTRICT=?, ATTRACTIONCITY=?, ATTRACTIONDESC=?, ATTRACTIONTAGS=? WHERE ATTRACTIONNO=?";
+
+                //TO-DO: replacement "?" with a method to access those peremeters
+
+                try (Connection conn = connect();
+                     PreparedStatement stmt = conn.prepareStatement(query)) {
+
+                    stmt.setString(1, attraction.getName());
+                    stmt.setString(2, attraction.getDistrict());
+                    stmt.setString(3, attraction.getCity());
+                    stmt.setString(4, attraction.getDescription());
+                    stmt.setString(5, String.join(",", attraction.getTags()));
+                    stmt.setInt(6, attractionNo);
+
+                    stmt.executeUpdate();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            //delete attraction (D)
+            //TO-DO: replace "?" with an integer that can be accessed through a method
+
+            public void deleteTouristAttraction(int attractionNo) {
+                String query = "DELETE FROM TOURISTATTRACTION WHERE ATTRACTIONNO=?";
+
+                try (Connection conn = connect();
+                     PreparedStatement stmt = conn.prepareStatement(query)) {
+
+                    stmt.setInt(1, attractionNo);
+                    stmt.executeUpdate();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
 
 }
