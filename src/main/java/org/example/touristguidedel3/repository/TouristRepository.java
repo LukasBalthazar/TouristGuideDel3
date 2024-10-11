@@ -11,9 +11,9 @@ import java.util.LinkedList;
 public class TouristRepository {
 
     //see edit configurations
-    public String url = System.getenv("DB_URL");
-    public String user = System.getenv("username");
-    public String password = System.getenv("password");
+    private String url = System.getenv("DB_URL");
+    private String user = System.getenv("username");
+    private String password = System.getenv("password");
 
     // Establishing the database connection
     private Connection connect() throws SQLException {
