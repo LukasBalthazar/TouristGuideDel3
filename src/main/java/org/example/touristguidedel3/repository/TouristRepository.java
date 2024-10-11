@@ -10,5 +10,13 @@ public class TouristRepository {
     public String user = "username";
     public String password ="password";
 
+    // Establishing the database connection
+    private Connection connect() throws SQLException {
+        return DriverManager.getConnection(url, user, password);
+    }
+
+    //Create a new attraction in the database
+
+
 
 }
