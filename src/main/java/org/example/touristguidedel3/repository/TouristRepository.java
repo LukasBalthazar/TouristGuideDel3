@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class TouristRepository {
 
     // Database connection configurations
-    private String url = System.getenv("DB_URL");
+    private String url = System.getenv("DB_url");
     private String user = System.getenv("username");
     private String password = System.getenv("password");
 
