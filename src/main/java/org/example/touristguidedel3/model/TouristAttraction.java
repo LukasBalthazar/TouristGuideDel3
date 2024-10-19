@@ -18,6 +18,9 @@ public class TouristAttraction {
         this.city = city;
     }
 
+    public TouristAttraction() {
+    }
+
     // Getters and setters
     public String getCity() {
         return city;

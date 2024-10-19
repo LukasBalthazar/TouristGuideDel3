@@ -7,7 +7,6 @@ import java.sql.*;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Scanner;
 
 @Repository
 public class TouristRepository {
@@ -58,7 +57,7 @@ public class TouristRepository {
 
             while (rs.next()) {
                 String name = rs.getString("ATTRACTIONNAME");
-                String district = rs.getString("ATTRACTIONDISTRICT"); // Retrieve district
+                String district = rs.getString("ATTRACTIONDISTRICT");
                 String city = rs.getString("ATTRACTIONCITY");
                 String description = rs.getString("ATTRACTIONDESC");
                 String tags = rs.getString("ATTRACTIONTAGS");
@@ -100,76 +99,63 @@ public class TouristRepository {
         return attractions;
     }
 
-    // Update attraction (U)
-    public void updateTouristAttraction(int attractionNo) {
-      /* in order to call: TouristRepository repository = new TouristRepository();
-                           repository.updateTouristRepository( int attractionNo);
-        */
-        String query = "UPDATE TOURISTATTRACTION SET ATTRACTIONNAME=?, ATTRACTIONDISTRICT=?, ATTRACTIONCITY=?, ATTRACTIONDESC=?, ATTRACTIONTAGS=? WHERE ATTRACTIONNO=?";
-
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Enter the new attraction name: ");
-        String newAttractionName = scanner.nextLine();
-
-        System.out.println("Enter the new district: ");
-        String newDistrict = scanner.nextLine();
-
-        System.out.println("Enter the new city: ");
-        String newCity = scanner.nextLine();
-
-        System.out.println("Enter the new description: ");
-        String newDescription = scanner.nextLine();
-
-        System.out.println("Enter the new tags (comma-separated): ");
-        String tagsInput = scanner.nextLine();
-        List<String> newTags = Arrays.asList(tagsInput.split(","));
+    // Get a specific attraction by its ID
+    public TouristAttraction getAttractionById(int attractionNo) {
+        TouristAttraction attraction = null;
+        String query = "SELECT * FROM TOURISTATTRACTION WHERE ATTRACTIONNO=?";
 
         try (Connection conn = connect();
              PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, attractionNo);
 
-            // Set values for the prepared statement
-            stmt.setString(1, newAttractionName);
-            stmt.setString(2, newDistrict);
-            stmt.setString(3, newCity);
-            stmt.setString(4, newDescription);
-            stmt.setString(5, String.join(",", newTags)); // The tags have to be a single string on the touristattraction table
-            stmt.setInt(6, attractionNo); // The attraction number remains unchanged
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    String name = rs.getString("ATTRACTIONNAME");
+                    String district = rs.getString("ATTRACTIONDISTRICT");
+                    String city = rs.getString("ATTRACTIONCITY");
+                    String description = rs.getString("ATTRACTIONDESC");
+                    String tags = rs.getString("ATTRACTIONTAGS");
 
-            stmt.executeUpdate();
-            System.out.println("Attraction updated successfully!");
-
+                    List<String> tagsList = Arrays.asList(tags.split(","));
+                    attraction = new TouristAttraction(name, description, district, tagsList, city);
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        scanner.close();
+        return attraction;
+    }
+
+
+    // Update attraction (U)
+    public void updateTouristAttraction(int attractionNo, TouristAttraction touristAttraction) {
+        String query = "UPDATE TOURISTATTRACTION SET ATTRACTIONNAME=?, ATTRACTIONDISTRICT=?, ATTRACTIONCITY=?, ATTRACTIONDESC=?, ATTRACTIONTAGS=? WHERE ATTRACTIONNO=?";
+
+        try (Connection conn = connect();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            // Set values for the prepared statement
+            stmt.setString(1, touristAttraction.getName());
+            stmt.setString(2, touristAttraction.getDistrict());
+            stmt.setString(3, touristAttraction.getCity());
+            stmt.setString(4, touristAttraction.getDescription());
+            stmt.setString(5, String.join(",", touristAttraction.getTags()));
+            stmt.setInt(6, attractionNo); // This is the attraction number
+
+            stmt.executeUpdate();
+            System.out.println("Attraction updated successfully!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     // Delete attraction (D)
-    public void deleteTouristAttraction() {
-        Scanner scanner = new Scanner(System.in);
-        int attractionNo = -1;
-
-        // Validate user input to ensure it's an integer
-        while (true) {
-            System.out.println("Which tourist attraction number do you want to delete?");
-
-            // Check if the input is an integer
-            if (scanner.hasNextInt()) {
-                attractionNo = scanner.nextInt();
-                break;  // Exit loop if valid integer is provided
-            } else {
-                System.out.println("Invalid input. Please enter a valid integer for the attraction number.");
-                scanner.next();  // Consume the invalid input
-            }
-        }
-
+    public void deleteTouristAttraction(int attractionNo) {
         String query = "DELETE FROM TOURISTATTRACTION WHERE ATTRACTIONNO=?";
 
         try (Connection conn = connect();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            // Use the valid attraction number in the query
+            // Set the attraction number in the query
             stmt.setInt(1, attractionNo);
             stmt.executeUpdate();
 
@@ -177,9 +163,6 @@ public class TouristRepository {
 
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            scanner.close();  // Close the scanner after use
         }
     }
-
 }

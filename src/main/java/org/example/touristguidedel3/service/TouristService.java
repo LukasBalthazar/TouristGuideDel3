@@ -29,14 +29,14 @@ public class TouristService {
     }
 
     // Update a tourist attraction
-    public String updateTouristAttraction(int attractionNo) {
-        touristRepository.updateTouristAttraction(attractionNo);
+    public String updateTouristAttraction(int attractionNo, TouristAttraction touristAttraction) {
+        touristRepository.updateTouristAttraction(attractionNo, touristAttraction);
         return "Tourist Attraction updated successfully!";
     }
 
     // Delete a tourist attraction
     public String deleteTouristAttraction(int attractionNo) {
-        touristRepository.deleteTouristAttraction();
+        touristRepository.deleteTouristAttraction(attractionNo); // Pass the attraction number
         return "Tourist Attraction deleted successfully!";
     }
 }
