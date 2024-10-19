@@ -1,6 +1,7 @@
 package org.example.touristguidedel3.repository;
 
 import org.example.touristguidedel3.model.TouristAttraction;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.Arrays;
@@ -8,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
+@Repository
 public class TouristRepository {
 
     // Database connection configurations
