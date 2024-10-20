@@ -61,7 +61,14 @@ public class TouristController {
         return "redirect:/tourist-attractions"; // Redirect after updating
     }
 
+  /*  @GetMapping("/attractions/{id}")
+    public String getAttractionDetails(@PathVariable Long id, Model model) {
+        Attraction attraction = attractionService.findAttractionById(id);
+        model.addAttribute("attraction", attraction);
+        return "attraction-details"; // This should match your HTML file name without the .html extension
+    }
 
+   */
 
     // Delete a tourist attraction
     @GetMapping("/delete/{id}")
