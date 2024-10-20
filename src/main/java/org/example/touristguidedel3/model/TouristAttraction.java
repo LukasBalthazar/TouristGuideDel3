@@ -61,5 +61,18 @@ public class TouristAttraction {
     public void setDistrict(String district) {
         this.district = district;
     }
+
+    // Override toString() method
+    @Override
+    public String toString() {
+        return "TouristAttraction{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", district='" + district + '\'' +
+                ", tags=" + tags +
+                ", city='" + city + '\'' +
+                '}';
+    }
+
 }
 

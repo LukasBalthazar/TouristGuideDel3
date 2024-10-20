@@ -19,9 +19,9 @@ public class TouristController {
     // Display all tourist attractions on the index.html page
     @GetMapping
     public String getTouristAttractions(Model model) {
-        List<TouristAttraction> attractions = touristService.getAllAttractions(); // Use the service method
+        List<TouristAttraction> attractions = touristService.getAllAttractions(); // Make sure this is returning data
         model.addAttribute("attractions", attractions);
-        return "index"; // Return index.html Thymeleaf template
+        return "index"; // Ensure this corresponds to your Thymeleaf template
     }
 
     // Display form to add a new attraction
