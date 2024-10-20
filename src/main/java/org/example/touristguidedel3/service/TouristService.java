@@ -10,8 +10,16 @@ import java.util.List;
 @Service
 public class TouristService {
 
+    private final TouristRepository touristRepository;
+
     @Autowired
-    private TouristRepository touristRepository;
+    public TouristService(TouristRepository touristRepository) {
+        this.touristRepository = touristRepository;
+    }
+
+    public TouristAttraction getAttractionById(int attractionNo) {
+        return touristRepository.getAttractionById(attractionNo);
+    }
 
     public String addTouristAttraction(TouristAttraction touristAttraction) {
         touristRepository.addTouristAttraction(touristAttraction);
@@ -27,6 +35,8 @@ public class TouristService {
     public List<TouristAttraction> getAttractionsByTag(String tag) {
         return touristRepository.getSpecificAttractionsByTags(tag);
     }
+
+
 
     // Update a tourist attraction
     public String updateTouristAttraction(int attractionNo, TouristAttraction touristAttraction) {

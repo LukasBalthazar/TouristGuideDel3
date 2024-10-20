@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Tourist Attractions</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+<h1>Tourist Attractions</h1>
+
+<!-- Check if there are attractions available -->
+<div th:if="${attractions.isEmpty()}">
+    <p>No attractions available at the moment.</p>
+</div>
+
+<!-- Display the list of attractions -->
+<div th:if="${!attractions.isEmpty()}">
+    <table border="1">
+        <thead>
+        <tr>
+            <th>Attraction No</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Location</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Loop through each attraction and display its details -->
+        <tr th:each="attraction : ${attractions}">
+            <td th:text="${attraction.attractionNo}"></td>
+            <td th:text="${attraction.name}"></td>
+            <td th:text="${attraction.description}"></td>
+            <td th:text="${attraction.location}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Link to add a new attraction (assuming you have a form to add) -->
+<a href="/add-attraction-form">Add New Attraction</a>
+
+</body>
+</html>

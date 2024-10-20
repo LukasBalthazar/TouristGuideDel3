@@ -72,6 +72,7 @@ public class TouristRepository {
         return attractions;
     }
 
+    // Get attractions by tags
     public List<TouristAttraction> getSpecificAttractionsByTags(String tag) {
         List<TouristAttraction> attractions = new LinkedList<>();
         String query = "SELECT * FROM TOURISTATTRACTION WHERE ATTRACTIONTAGS LIKE ?";
@@ -125,7 +126,6 @@ public class TouristRepository {
         }
         return attraction;
     }
-
 
     // Update attraction (U)
     public void updateTouristAttraction(int attractionNo, TouristAttraction touristAttraction) {
